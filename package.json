@@ -11,15 +11,12 @@
     "CSS"
   ],
   "homepage": "http://aurelia.io",
-  "bugs": {
-    "url": "https://github.com/aurelia/bundler/issues"
-  },
   "license": "MIT",
   "author": "Rob Eisenberg <rob@bluespire.com> (http://robeisenberg.com/)",
   "main": "dist/index.js",
   "repository": {
     "type": "git",
-    "url": "http://github.com/aurelia/bundler"
+    "url": "http://github.com/jan-zajic/bundler"
   },
   "scripts": {
     "lint": "tslint --project tsconfig.json",
