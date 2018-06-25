@@ -3,7 +3,7 @@ import * as revPath from 'rev-path';
 import * as revHash from 'rev-hash';
 import * as fs from 'fs';
 import * as path from 'path';
-import {Config, BundleConfig, ConfigBody, ConfigHeader} from './models';
+import {Config, ConfigBody, ConfigHeader} from './models';
 
 export function getOutFileName(source: string, fileName: string, rev: boolean) {
   return rev ? revPath(fileName, revHash(new Buffer(source, 'utf-8'))) : fileName;
@@ -115,7 +115,7 @@ export function getHtmlImportBundleConfig(bundleCfg: ConfigBody, bundleName: str
 }
 
 export function ensureDefaults(config: Config) {
-  return _.defaults<Config>(config, {
+  return _.defaults(config, {
     baseURL: '.',
     builderCfg: {},
     bundles: {},
