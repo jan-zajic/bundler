@@ -80,9 +80,9 @@ export function bundle(cfg: BundleConfig, builderFactory = createBuilder) {
   return Promise.all<any>(tasks);
 }
 
-export function depCache(cfg: BundleConfig): Promise<any> {
+export function depCache(cfg: BundleConfig, builderFactory): Promise<any> {
   let buildExpression = createBuildExpression(cfg);
-  return _depCache(buildExpression, cfg);
+  return _depCache(buildExpression, cfg, builderFactory);
 }
 
 function _depCache(buildExpression: string, cfg: BundleConfig, builderFactory) {
