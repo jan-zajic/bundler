@@ -62,7 +62,7 @@ export function getCSSMinOpts(opts: any) {
 }
 
 export function getBundleConfig(bundleCfg: ConfigBody, bundleName: string, config: Config) {
-  return _.defaultsDeep<ConfigBody, BundleConfig>(bundleCfg, {
+  return _.defaultsDeep(bundleCfg, {
     baseURL: config.baseURL,
     builderCfg: config.builderCfg,
     bundleName: bundleName,
@@ -84,7 +84,7 @@ export function getBundleConfig(bundleCfg: ConfigBody, bundleName: string, confi
 }
 
 export function getHtmlImportBundleConfig(bundleCfg: ConfigBody, bundleName: string, config: ConfigHeader) {
-  let cfg = _.defaultsDeep<ConfigBody, BundleConfig>(bundleCfg, {
+  let cfg = _.defaultsDeep(bundleCfg, {
     htmlimport: true,
     includes: '*.html',
     bundleName: bundleName,
