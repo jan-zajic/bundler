@@ -11,7 +11,7 @@ import {
 
 export * from './unbundle';
 
-export function bundle(inpConfig: Config, builderFactory?) {
+export function bundle(inpConfig: Config, builderFactory? : any) {
   let tasks: Promise<any>[] = [];
   let config = ensureDefaults(inpConfig);
   validateConfig(config);
@@ -32,7 +32,7 @@ export function bundle(inpConfig: Config, builderFactory?) {
   return Promise.all(tasks);
 }
 
-export function depCache(bundleConfig: Config, builderFactory?) {
+export function depCache(bundleConfig: Config, builderFactory? : any) {
   let tasks: Promise<any>[] = [];
   let config = ensureDefaults(bundleConfig);
   validateConfig(config);

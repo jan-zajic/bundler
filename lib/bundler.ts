@@ -80,12 +80,12 @@ export function bundle(cfg: BundleConfig, builderFactory = createBuilder) {
   return Promise.all<any>(tasks);
 }
 
-export function depCache(cfg: BundleConfig, builderFactory): Promise<any> {
+export function depCache(cfg: BundleConfig, builderFactory : any): Promise<any> {
   let buildExpression = createBuildExpression(cfg);
   return _depCache(buildExpression, cfg, builderFactory);
 }
 
-function _depCache(buildExpression: string, cfg: BundleConfig, builderFactory) {
+function _depCache(buildExpression: string, cfg: BundleConfig, builderFactory : any) {
   let builder = builderFactory(cfg);
   return builder.trace(buildExpression, cfg.options)
     .then(tree => {
@@ -101,7 +101,7 @@ function _depCache(buildExpression: string, cfg: BundleConfig, builderFactory) {
     });
 }
 
-function _bundle(buildExpression: string, cfg: BundleConfig, builderFactory) {
+function _bundle(buildExpression: string, cfg: BundleConfig, builderFactory : any) {
   let builder = builderFactory(cfg);
   return builder.bundle(buildExpression, cfg.options)
     .then((output) => {
