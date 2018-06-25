@@ -8,7 +8,7 @@ var bundler = require("./bundler");
 var hitb = require("./html-import-template-bundler");
 var utils_1 = require("./utils");
 __export(require("./unbundle"));
-function bundle(inpConfig) {
+function bundle(inpConfig, builderFactory) {
     var tasks = [];
     var config = utils_1.ensureDefaults(inpConfig);
     utils_1.validateConfig(config);
@@ -22,13 +22,13 @@ function bundle(inpConfig) {
             tasks.push(hitb.bundle(utils_1.getHtmlImportBundleConfig(cfg, key, config)));
         }
         else {
-            tasks.push(bundler.bundle(utils_1.getBundleConfig(cfg, key, config)));
+            tasks.push(bundler.bundle(utils_1.getBundleConfig(cfg, key, config), builderFactory));
         }
     });
     return Promise.all(tasks);
 }
 exports.bundle = bundle;
-function depCache(bundleConfig) {
+function depCache(bundleConfig, builderFactory) {
     var tasks = [];
     var config = utils_1.ensureDefaults(bundleConfig);
     utils_1.validateConfig(config);
@@ -42,7 +42,7 @@ function depCache(bundleConfig) {
         if (cfg.htmlimport) {
             return;
         }
-        tasks.push(bundler.depCache(utils_1.getBundleConfig(cfg, key, config)));
+        tasks.push(bundler.depCache(utils_1.getBundleConfig(cfg, key, config), builderFactory));
     });
     return Promise.all(tasks);
 }

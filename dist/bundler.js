@@ -51,25 +51,26 @@ function createFetchHook(cfg) {
         return fetch(load);
     };
 }
-function bundle(cfg) {
+function bundle(cfg, builderFactory) {
+    if (builderFactory === void 0) { builderFactory = builder_factory_1.createBuilder; }
     var buildExpression = createBuildExpression(cfg);
     cfg.options.fetch = createFetchHook(cfg);
     var tasks = [
-        _bundle(buildExpression, cfg)
+        _bundle(buildExpression, cfg, builderFactory)
     ];
     if (cfg.options.depCache) {
-        tasks.push(_depCache(buildExpression, cfg));
+        tasks.push(_depCache(buildExpression, cfg, builderFactory));
     }
     return Promise.all(tasks);
 }
 exports.bundle = bundle;
-function depCache(cfg) {
+function depCache(cfg, builderFactory) {
     var buildExpression = createBuildExpression(cfg);
-    return _depCache(buildExpression, cfg);
+    return _depCache(buildExpression, cfg, builderFactory);
 }
 exports.depCache = depCache;
-function _depCache(buildExpression, cfg) {
-    var builder = builder_factory_1.createBuilder(cfg);
+function _depCache(buildExpression, cfg, builderFactory) {
+    var builder = builderFactory(cfg);
     return builder.trace(buildExpression, cfg.options)
         .then(function (tree) {
         var depCache = builder.getDepCache(tree);
@@ -82,8 +83,8 @@ function _depCache(buildExpression, cfg) {
         return Promise.resolve();
     });
 }
-function _bundle(buildExpression, cfg) {
-    var builder = builder_factory_1.createBuilder(cfg);
+function _bundle(buildExpression, cfg, builderFactory) {
+    var builder = builderFactory(cfg);
     return builder.bundle(buildExpression, cfg.options)
         .then(function (output) {
         var outfile = utils.getOutFileName(output.source, cfg.bundleName + '.js', cfg.options.rev);
