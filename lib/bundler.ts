@@ -65,16 +65,16 @@ function createFetchHook(cfg: BundleConfig): FetchHook {
   };
 }
 
-export function bundle(cfg: BundleConfig) {
+export function bundle(cfg: BundleConfig, builderFactory = createBuilder) {
   let buildExpression = createBuildExpression(cfg);
   cfg.options.fetch = createFetchHook(cfg);
 
   let tasks = [
-    _bundle(buildExpression, cfg)
+    _bundle(buildExpression, cfg, builderFactory)
   ];
 
   if (cfg.options.depCache) {
-    tasks.push(_depCache(buildExpression, cfg));
+    tasks.push(_depCache(buildExpression, cfg, builderFactory));
   }
 
   return Promise.all<any>(tasks);
@@ -85,8 +85,8 @@ export function depCache(cfg: BundleConfig): Promise<any> {
   return _depCache(buildExpression, cfg);
 }
 
-function _depCache(buildExpression: string, cfg: BundleConfig) {
-  let builder = createBuilder(cfg);
+function _depCache(buildExpression: string, cfg: BundleConfig, builderFactory) {
+  let builder = builderFactory(cfg);
   return builder.trace(buildExpression, cfg.options)
     .then(tree => {
       let depCache = builder.getDepCache(tree);
@@ -101,8 +101,8 @@ function _depCache(buildExpression: string, cfg: BundleConfig) {
     });
 }
 
-function _bundle(buildExpression: string, cfg: BundleConfig) {
-  let builder = createBuilder(cfg);
+function _bundle(buildExpression: string, cfg: BundleConfig, builderFactory) {
+  let builder = builderFactory(cfg);
   return builder.bundle(buildExpression, cfg.options)
     .then((output) => {
       let outfile = utils.getOutFileName(output.source, cfg.bundleName + '.js', cfg.options.rev as boolean);

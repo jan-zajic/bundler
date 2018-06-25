@@ -11,7 +11,7 @@ import {
 
 export * from './unbundle';
 
-export function bundle(inpConfig: Config) {
+export function bundle(inpConfig: Config, builderFactory?) {
   let tasks: Promise<any>[] = [];
   let config = ensureDefaults(inpConfig);
   validateConfig(config);
@@ -25,14 +25,14 @@ export function bundle(inpConfig: Config) {
       if (cfg.htmlimport) {
         tasks.push(hitb.bundle(getHtmlImportBundleConfig(cfg, key, config)));
       } else {
-        tasks.push(bundler.bundle(getBundleConfig(cfg, key, config)));
+        tasks.push(bundler.bundle(getBundleConfig(cfg, key, config), builderFactory));
       }
     });
 
   return Promise.all(tasks);
 }
 
-export function depCache(bundleConfig: Config) {
+export function depCache(bundleConfig: Config, builderFactory?) {
   let tasks: Promise<any>[] = [];
   let config = ensureDefaults(bundleConfig);
   validateConfig(config);
@@ -48,7 +48,7 @@ export function depCache(bundleConfig: Config) {
       if (cfg.htmlimport) {
         return;
       }
-      tasks.push(bundler.depCache(getBundleConfig(cfg, key, config)));
+      tasks.push(bundler.depCache(getBundleConfig(cfg, key, config), builderFactory));
     });
 
   return Promise.all(tasks);
