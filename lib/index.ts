@@ -10,6 +10,7 @@ import {
 } from './utils';
 
 export * from './unbundle';
+export * from './builder-factory';
 
 export function bundle(inpConfig: Config, builderFactory? : any) {
   let tasks: Promise<any>[] = [];

@@ -8,6 +8,7 @@ var bundler = require("./bundler");
 var hitb = require("./html-import-template-bundler");
 var utils_1 = require("./utils");
 __export(require("./unbundle"));
+__export(require("./builder-factory"));
 function bundle(inpConfig, builderFactory) {
     var tasks = [];
     var config = utils_1.ensureDefaults(inpConfig);
